@@ -3,21 +3,22 @@
  */
 import ReactDOMClient from 'react-dom/client';
 export * from './utils';
-export interface PortalProps {
+export interface SimplePortalProps {
   /**父节点id*/
-  id: string;
+  id?: string;
   /**渲染内容*/
   children: React.ReactNode;
   /**自动移除dom时间 当设为 0 时不自动关闭*/
   timeout?: number;
 }
 
-const rootMap: Map<string, HTMLDivElement> = new Map([]);
+const rootSimpleMap: Map<string, HTMLDivElement> = new Map([]);
 
 /**用于添加渲染dom节点操作*/
-export class Portal {
+export class SimplePortal {
+
   /**父节点id*/
-  id: string = 'root-portal';
+  id: string = 'root-simple-portal';
   /**渲染内容*/
   children: React.ReactNode = '';
   /**自动移除dom时间*/
@@ -26,11 +27,15 @@ export class Portal {
   child?: HTMLDivElement;
   timer?: NodeJS.Timeout;
   root?: ReactDOMClient.Root;
-  setOptions(props: PortalProps) {
-    this.id = props.id;
+
+  setOptions(props: SimplePortalProps) {
+    if (props?.id) {
+      this.id = props.id;
+    }
     this.children = props.children;
     this.timeout = typeof props.timeout === 'number' ? props.timeout : 3000;
   }
+
   /**创建子节点*/
   private createChildDOM() {
     const dom = document.getElementById(this.id);
@@ -49,7 +54,7 @@ export class Portal {
       // 把节点放入body中
       document.body.appendChild(newDom);
       /**重新存储节点*/
-      rootMap.set(this.id, newDom);
+      rootSimpleMap.set(this.id, newDom);
     } else {
       // 创建子节点
       this.child = document.createElement('div');
@@ -89,7 +94,7 @@ export class Portal {
       // 挂载置空
       this.root = undefined;
       // 获取挂载父节点
-      const root = rootMap.get(this.id);
+      const root = rootSimpleMap.get(this.id);
       // 移除挂载节点
       if (root && root.childNodes.length === 0) {
         root.remove();

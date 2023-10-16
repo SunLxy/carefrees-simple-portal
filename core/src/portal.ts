@@ -65,7 +65,7 @@ export class SimplePortal {
     this.timeout = typeof props.timeout === 'number' ? props.timeout : 3000;
   }
 
-  private setAttribute(dom: HTMLElement, name: string, value: string) {
+  private setDOMAttribute(dom: HTMLElement, name: string, value: string) {
     if (value)
       dom.setAttribute(name, value)
   }
@@ -80,11 +80,11 @@ export class SimplePortal {
     if (!dom) {
       // 创建父节点
       const newDom = document.createElement('div');
-      this.setAttribute(newDom, "id", this.id)
-      this.setAttribute(newDom, "class", this.rootClassName)
+      this.setDOMAttribute(newDom, "id", this.id)
+      this.setDOMAttribute(newDom, "class", this.rootClassName)
       /**创建挂载渲染内容的子节点*/
       this.child = document.createElement('div');
-      this.setAttribute(this.child, "class", this.className)
+      this.setDOMAttribute(this.child, "class", this.className)
       // 把子节点放入父节点中
       newDom.appendChild(this.child);
       // 把节点放入body中
@@ -96,13 +96,13 @@ export class SimplePortal {
       this.child = document.createElement('div');
       /**把子节点放入父节点中*/
       dom.appendChild(this.child);
-      this.setAttribute(dom, "class", this.rootClassName)
-      this.setAttribute(this.child, "class", this.className)
+      this.setDOMAttribute(dom, "class", this.rootClassName)
+      this.setDOMAttribute(this.child, "class", this.className)
     }
     return this.child;
   }
-  /**显示*/
-  show() {
+  /**挂载*/
+  mount() {
     /**判断是否已经存在节点*/
     if (!this.child) {
       this.createChildDOM();
@@ -120,8 +120,8 @@ export class SimplePortal {
       }
     }
   }
-  /**隐藏*/
-  hide() {
+  /**卸载*/
+  unmount() {
     if (this.child) {
       // 卸载创建的Root
       this.root?.unmount();
@@ -142,7 +142,7 @@ export class SimplePortal {
   /**自动关闭*/
   private close() {
     this.timer = setTimeout(() => {
-      this.hide();
+      this.unmount();
     }, this.timeout);
   }
 }

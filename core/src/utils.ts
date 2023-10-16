@@ -32,7 +32,7 @@ export const openSimplePortal = (options: OpenSimplePortalOption) => {
   }
   OpenRootDom.set(rootId, rootDOM);
   const onRequestClose = () => {
-    rootDOM?.hide();
+    rootDOM?.unmount();
   };
   rootDOM.setOptions({
     ...rest,
@@ -40,6 +40,6 @@ export const openSimplePortal = (options: OpenSimplePortalOption) => {
     children: isValidElement(children) ? cloneElement(children, { onRequestClose } as any) : children,
     timeout,
   });
-  rootDOM.show();
+  rootDOM.mount();
   return rootDOM;
 };

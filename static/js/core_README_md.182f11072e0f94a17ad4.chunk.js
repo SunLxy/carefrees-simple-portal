@@ -1,1 +1,0 @@
-(self.webpackChunkexamples=self.webpackChunkexamples||[]).push([["core_README_md"],{11771:function(e,n,s){"use strict";s.r(n),s.d(n,{default:function(){return a}});var a={components:{},data:{},source:"# `simple-portal`\n\n挂载节点\n",headings:[],headingsList:[]}}}]);

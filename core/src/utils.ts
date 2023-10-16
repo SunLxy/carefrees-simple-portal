@@ -7,7 +7,9 @@ export interface OpenSimplePortalOption {
   /**根节点id*/
   rootId?: string;
   children: React.ReactNode;
+  /**是否只把展示内容进行替换，不显示多个弹框之类的*/
   isOnly?: boolean;
+  /**自动移除dom时间*/
   timeout?: number;
   /**根节点className*/
   rootClassName?: string
